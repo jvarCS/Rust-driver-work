@@ -499,6 +499,7 @@ impl<'a, 'tcx, Bx: BuilderMethods<'a, 'tcx>> FunctionCx<'a, 'tcx, Bx> {
             // bx.unsafe_metadata(place.llval);
 
         }
+        // Raw ptr stuff
 
         let (args1, args2);
         let mut args = if let Some(llextra) = place.llextra {
@@ -793,6 +794,7 @@ impl<'a, 'tcx, Bx: BuilderMethods<'a, 'tcx>> FunctionCx<'a, 'tcx, Bx> {
         let span = source_info.span;
 
         // Create the callee. This is a fn ptr or zero-sized and hence a kind of scalar.
+        // Raw ptr stuff
         let callee = self.codegen_operand(bx, func);
         if destination
             .ty(self.mir, bx.tcx())
@@ -802,6 +804,7 @@ impl<'a, 'tcx, Bx: BuilderMethods<'a, 'tcx>> FunctionCx<'a, 'tcx, Bx> {
             println!("HIIIII");
             self.maybe_tag_rawptr_value(bx, callee.val);
         }
+        // Raw ptr stuff
 
         let (instance, mut llfn) = match *callee.layout.ty.kind() {
             ty::FnDef(def_id, args) => (
@@ -1784,7 +1787,7 @@ impl<'a, 'tcx, Bx: BuilderMethods<'a, 'tcx>> FunctionCx<'a, 'tcx, Bx> {
         }
     }
 
-    // RAW PTR STUFF FROM LLM
+    // RAW PTR STUFF FROM
     fn maybe_tag_rawptr_value(
         &self,
         bx: &mut Bx,
@@ -1809,7 +1812,7 @@ impl<'a, 'tcx, Bx: BuilderMethods<'a, 'tcx>> FunctionCx<'a, 'tcx, Bx> {
             }
         }
     }
-    // RAW PTR STUFF FROM LLM
+    // RAW PTR STUFF
 
     // Stores the return value of a function call into it's final location.
     fn store_return(

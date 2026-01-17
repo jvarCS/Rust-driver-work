@@ -617,6 +617,7 @@ impl<'a, 'll, 'tcx> BuilderMethods<'a, 'tcx> for Builder<'a, 'll, 'tcx> {
             OperandValue::Ref(place.llval, None, place.align)
         };
 
+        // Raw ptr stuff
         if place.layout.ty.is_unsafe_ptr() {
             match &val {
                 OperandValue::Immediate(v) => {
@@ -635,7 +636,7 @@ impl<'a, 'll, 'tcx> BuilderMethods<'a, 'tcx> for Builder<'a, 'll, 'tcx> {
                 OperandValue::ZeroSized => {}
             }
         }
-        // ===== END HOOK =====
+        // Raw ptr stuff
 
         OperandRef { val, layout: place.layout }
     }
