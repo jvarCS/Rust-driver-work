@@ -1,0 +1,31 @@
+error[E0106]: missing lifetime specifier
+  --> $DIR/ex1b-return-no-names-if-else.rs:1:29
+   |
+LL | fn foo(x: &i32, y: &i32) -> &i32 {
+   |           ----     ----     ^ expected named lifetime parameter
+   |
+   = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`
+help: consider introducing a named lifetime parameter
+   |
+LL | fn foo<'a>(x: &'a i32, y: &'a i32) -> &'a i32 {
+   |       ++++     ++          ++          ++
+
+error: lifetime may not live long enough
+  --> $DIR/ex1b-return-no-names-if-else.rs:2:16
+   |
+LL | fn foo(x: &i32, y: &i32) -> &i32 {
+   |           - let's call the lifetime of this reference `'1`
+LL |     if x > y { x } else { y }
+   |                ^ returning this value requires that `'1` must outlive `'static`
+
+error: lifetime may not live long enough
+  --> $DIR/ex1b-return-no-names-if-else.rs:2:27
+   |
+LL | fn foo(x: &i32, y: &i32) -> &i32 {
+   |                    - let's call the lifetime of this reference `'2`
+LL |     if x > y { x } else { y }
+   |                           ^ returning this value requires that `'2` must outlive `'static`
+
+error: aborting due to 3 previous errors
+
+For more information about this error, try `rustc --explain E0106`.
